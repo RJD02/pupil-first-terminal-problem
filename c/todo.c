@@ -32,6 +32,17 @@ int main(int argc, char const *argv[]) {
     delete(fptr, event_number);
     return 0;
   }
+  // if(!strcmp(argv[1], "done")) {
+  //   char event[1];
+  //   strcpy(event, argv[2]);
+  //   int todo_completed = event[0] - '0';
+  //   done(fptr, todo_completed);
+  //   return 0;
+  // }
+  // if(!strcmp(argv[1], "report")) {
+  //   status(fptr);
+  //   return 0;
+  // }
   fclose(fptr);
   return 0;
 }
