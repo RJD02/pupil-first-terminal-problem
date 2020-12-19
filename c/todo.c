@@ -3,7 +3,6 @@
 #include<stdlib.h>
 #define debug(c, n) printf("%s %d\n", (char*)c, (int)n)
 #include"list.h"
-#define pointList List*
 //done is 0 if task is not completed, and 1 if completed.
 // struct Todo {
 //   int done;
@@ -19,20 +18,26 @@
 //   Todo* tail;
 // };
 
+void help();
+void add(char add_todo[]);
 int number_of_tasks = 0;
 List *tasks;
 
-void add(char add_todo[]) {
-  debug("Inside add()", 3);
-  if(check(tasks, add_todo)) {
-    printf("Already in the todo list\n");
-    return ;
+int main(int argc, char const *argv[]) {
+  char add_todo[128];
+  tasks = (List*)malloc(1 * sizeof(List));
+  init(tasks);
+  if(argc == 1 || !strcmp(argv[1], "help") || argv[1] == NULL) {
+    help();
+    return 0;
   }
-  // tasks[number_of_tasks]->event = add_todo;
-  debug("After checking", 4);
-  addTodo(tasks, add_todo);
-  number_of_tasks++;
-  printf("Added todo: \"%s\"\n", add_todo);
+  //TODO: .\todo add #add a new todo..
+  if(!strcmp(argv[1], "add")) {
+    // debug("Inside strcmp", 2);
+    strcpy(add_todo, argv[2]);
+    add(add_todo);
+  }
+  return 0;
 }
 
 void help() {
@@ -52,18 +57,15 @@ void help() {
   printf("%s\n", sixth_line);
 }
 
-int main(int argc, char const *argv[]) {
-  char add_todo[128];
-  List* tasks = (pointList)malloc(1 * sizeof(List));
-  init(tasks);
-  if(argc == 1 || !strcmp(argv[1], "help") || argv[1] == NULL) {
-    help();
+void add(char add_todo[]) {
+  // debug("Inside add()", 3);
+  if(check(tasks, add_todo)) {
+    printf("Already in the todo list\n");
+    return ;
   }
-  //TODO: .\todo add #add a new todo..
-  if(!strcmp(argv[1], "add")) {
-    debug("Inside strcmp", 2);
-    strcpy(add_todo, argv[2]);
-    add(add_todo);
-  }
-  return 0;
+  // tasks[number_of_tasks]->event = add_todo;
+  // debug("After checking", 4);
+  addTodo(tasks, add_todo);
+  number_of_tasks++;
+  printf("Added todo: \"%s\"\n", add_todo);
 }

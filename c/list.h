@@ -19,16 +19,16 @@ void init(List *a) {
 }
 
 int check(List *a, char event[]) {
-  debug("Inside check()", 5);
+  // debug("Inside check()", 5);
   if(a->head == NULL) {
-    debug("inside check if condition", 8);
+    // debug("inside check if condition", 8);
     return 0;
   }
-  debug("After checking the null pointer condition", 6);
+  // debug("After checking the null pointer condition", 6);
   Todo *travel = (Todo*)malloc(sizeof(Todo*));
-  debug("After allocating the travel pointer", 7);
+  // debug("After allocating the travel pointer", 7);
   travel = a->head;
-  debug("After travel = a->head", 9);
+  // debug("After travel = a->head", 9);
   while(travel != NULL) {
     if(!strcmp(travel->event, event)) {
       return 1;
