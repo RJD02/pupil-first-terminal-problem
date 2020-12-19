@@ -41,40 +41,29 @@ void help() {
   printf("%s\n", sixth_line);
 }
 
-void add(char add_todo[]) {
-  // debug("Inside add()", 3);
-  if(check(tasks, add_todo)) {
-    printf("Already in the todo list\n");
-    return ;
-  }
-  // tasks[number_of_tasks]->event = add_todo;
-  // debug("After checking", 4);
-  addTodo(tasks, add_todo);
-  number_of_tasks++;
-  printf("Added todo: \"%s\"\n", add_todo);
-}
-
 void display(/* arguments */) {
   FILE* fptr = fopen("todo.txt", "r+");
   if(fptr == NULL) {
     printf("Error!\n");
     exit(1);
   }
-  char c[50][128];
+  char c[128];
   // *c = (char*)malloc(128 * sizeof(char));
   // **c = (char**)malloc(50 * sizeof(char));
   // c = (char*)malloc(128 * sizeof(char));
-  int number_of_lines = count(fptr);
-  int i = 0;
-  while(fgets(c[i], 128, fptr) != NULL) {
+  // int number_of_lines = count(fptr);
+  // int i = 0;
+  while(fgets(c/*[i]*/, 128, fptr) != NULL) {
     // fgets(c, 128, fptr);
     // fscanf(fptr, "%s", c);
-    // printf("%s", c);
-    i++;
+    printf("%s", c);
+    // i++;
   }
+  /*
   for(int i =  0; i < number_of_lines; i++) {
     printf("%s\n", c[number_of_lines - i - 1]);
   }
+  */
   printf("\n");
   fclose(fptr);
   // free(c);
@@ -88,8 +77,9 @@ void add(char event[]) {
   }
   // int number_of_event = count();
   // fprintf(fptr, "\n");
-  fprintf(fptr, "\n[%d] %s\n", count(fptr), event);
+  fprintf(fptr, "[%d] %s\n", count(fptr), event);
   fclose(fptr);
+  printf("Added todo: \"%s\"\n", event);
 }
 
 int count(FILE* fptr) {
