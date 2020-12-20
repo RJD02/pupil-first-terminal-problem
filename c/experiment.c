@@ -5,7 +5,7 @@
 
   int main()
   {
-        int lno, ctr = 1;
+        int lno, ctr = 0;
         char ch;
         FILE *fptr1, *fptr2;
 		char fname[MAX];

@@ -25,10 +25,10 @@ int main(int argc, char const *argv[]) {
     return 0;
   }
   if(!strcmp(argv[1], "del")) {
-    char event[4];
+    char event[2];
     strcpy(event, argv[2]);
-    int event_number = atoi(event);
-    debug("event_number =", event_number);
+    int event_number = event[0] - '0';
+    // debug("event_number =", event_number);
     delete(fptr, event_number);
     return 0;
   }
