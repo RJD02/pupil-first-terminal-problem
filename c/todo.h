@@ -47,7 +47,7 @@ void add(FILE* fptr, char event[]) {
   //   printf("The event already exists!\n");
   //   return ;
   // }
-  fprintf(fptr, "[%d] %s\n", countTodo(fptr), event);
+  fprintf(fptr, "\n%s\n", event);
   printf("Added todo: \"%s\"\n", event);
 }
 
@@ -61,44 +61,51 @@ int countTodo(FILE* fptr) {
 }
 
 void display(FILE* fptr) {
+  if(countTodo(fptr) == 1) {
+    return ;
+  }
   char c[50][128];
   int count = 0;
+  strcpy(c[count], "\0");
   while(fgets(c[count], 128, fptr) != NULL) {
     // printf("%s\n", c[count]);
     count++;
+    strcpy(c[count], "\0");
   }
-  for (size_t i = 0; i < count; i++) {
-    printf("%s", c[count - i - 1]);
+  for (int i = 0; i < count; i++) {
+    printf("[%d] %s", i + 1, c[count - i - 1]);
   }
   printf("\n");
 }
 
 void delete(FILE* fptr_original, int event_number) {
   if(event_number > countTodo(fptr_original)) {
-    printf("Error: todo #%d does nor exit. Nothing deleted\n", event_number);
+    printf("Error: todo #%d does not exist. Nothing deleted.\n", event_number);
+    return ;
   }
   char temp[] = "temp.txt";
-  char c[128];
-  int curr_line = 0;
+  char str[128];
+  int count = 1;
   FILE* fptr_temp = fopen(temp, "w");
   if(fptr_temp == NULL) {
     printf("Error!\n");
     exit(1);
   }
-  while(fgets(c, 128, fptr_original) != NULL) {
-    fprintf(fptr_temp, "%s", c);
-  }
-  fclose(fptr_original);
-  remove("todo.txt");
-  fptr_original = fopen("todo.txt", "w");
-  while (fgets(c, 128, fptr_temp) != NULL) {
-    curr_line++;
-    if(curr_line != event_number) {
-      fprintf(fptr_original, "%s", c);
+  while(!feof(fptr_original)) {
+    strcpy(str, "\0");
+    fgets(str, 128, fptr_original);
+    if(!feof(fptr_original)) {
+      count++;
+      if(count != event_number) {
+        fprintf(fptr_temp, "%s", str);
+      }
     }
   }
+  fclose(fptr_original);
   fclose(fptr_temp);
-  remove("temp.txt");
+  remove("todo.txt");
+  rename(temp, "todo.txt");
+  fptr_original = fopen("todo.txt", "w");
 }
 
 #endif
