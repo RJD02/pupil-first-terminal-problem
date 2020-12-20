@@ -1,5 +1,6 @@
 #ifndef TODO_H
 #define TODO_H
+#define debug(c, n) printf("%s %d\n", (char*)c, (int)n)
 void help();
 void display(FILE* fptr);
 void add(FILE* fptr, char event[]);
@@ -25,29 +26,11 @@ void help() {
   printf("%s\n", sixth_line);
 }
 
-// void display(/* arguments */) {
-//   FILE* fptr = fopen("todo.txt", "r+");
-//   if(fptr == NULL) {
-//     printf("Error!\n");
-//     exit(1);
-//   }
-//   char c[128];
-//   while(fgets(c/*[i]*/, 128, fptr) != NULL) {
-//     printf("%s", c);
-//   }
-//   printf("\n");
-//   fclose(fptr);
-//   // free(c);
-// }
-
 void add(FILE* fptr, char event[]) {
-  // int number_of_event = count();
-  // fprintf(fptr, "\n");
-  // if(check(fptr, event)) {
-  //   printf("The event already exists!\n");
-  //   return ;
-  // }
-  fprintf(fptr, "[%d] %s\n", countTodo(fptr), event);
+  //TODO: IMPLEMENT CHECK FUNCTION TO CHECK WHETHER THE EVENT OF THE SAME NAME EXISTS IN THE TEXT FILE.
+  // fprintf(fptr, "[%d] %s\n" /*" %s\n"*/, countTodo(fptr), event);
+  fprintf(fptr, "%s\n" /*" %s\n"*/, event);
+  // fprintf(fptr, "%s\n", event);
   printf("Added todo: \"%s\"\n", event);
 }
 
@@ -63,12 +46,17 @@ int countTodo(FILE* fptr) {
 void display(FILE* fptr) {
   char c[50][128];
   int count = 0;
+  // debug("Checking c", 1);
+  // strcpy(c[count], "\0");
   while(fgets(c[count], 128, fptr) != NULL) {
     // printf("%s\n", c[count]);
     count++;
+    // strcpy(c[count], "\0");
   }
-  for (size_t i = 0; i < count; i++) {
-    printf("%s", c[count - i - 1]);
+  // debug("After checking c", 1);
+  debug("Count =", count);
+  for (int i = 0; i < count; i++) {
+    printf("[%d] %s", count - i, c[count - i - 1]);
   }
   printf("\n");
 }
@@ -90,7 +78,7 @@ void delete(FILE* fptr_original, int event_number) {
   }
   fclose(fptr_original);
   remove("todo.txt");
-  fptr_original = fopen("todo.txt", "w");
+  fptr_original = fopen("todo.txt", "r+");
   while (fgets(c, 128, fptr_temp) != NULL) {
     curr_line++;
     if(curr_line != event_number) {
