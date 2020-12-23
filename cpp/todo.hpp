@@ -1,5 +1,8 @@
 #ifndef TODO_HPP
 #define TODO_HPP
+#include<iostream>
+#include<string>
+using namespace std;
 
 void help() {
 	cout << "Usage :-\n";
@@ -16,8 +19,8 @@ int count(fstream &todo_txt) {
   int count = 0;
   string line;
   while (!todo_txt.eof()) {
-    getline(todo_txt, line);
-    count++;
+	getline(todo_txt, line);
+	count++;
   }
   return count - 1;
 }
@@ -25,22 +28,21 @@ int count(fstream &todo_txt) {
 void display(fstream &todo_txt) {
   int lim = count(todo_txt);
   if (lim == 0) {
-    cout << "No lines";
-    return ;
+	cout << "No lines";
+	return ;
   }
   string out[50];
   string exp;
   int i = 0;
   todo_txt >> exp;
-  cout << exp << "\n";
-  cout << todo_txt << "\n";
+  // cout << exp << "\n";
+  // cout << todo_txt << "\n";
   while (!todo_txt.eof()) {
-    getline(todo_txt, /*out[i]*/ exp);
-    cout << exp << "\n";
-    i++;
+	cout << exp << "\n";
+	i++;
   }
   for(int i = 0; i < lim; i++) {
-    std::cout << "[" << i + 1 << "]" << " " << out[lim - 1 - i] << '\n';
+	std::cout << "[" << i + 1 << "]" << " " << out[lim - 1 - i] << '\n';
   }
 }
 

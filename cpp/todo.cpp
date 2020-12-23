@@ -11,25 +11,29 @@ int main(int argc, char const *argv[])
 {
 	if(argc == 1 || !strcmp(argv[1], "help")) {
 		help();
+		return 0;
 	}
-	// cout << "HELLO WORLD\n";
 	fstream todo_txt;
-	todo_txt.open("todo.txt", ios::in);
-	if(!todo_txt) {
-		cout << "Error";
+	todo_txt.open("todo.txt", ios::in|ios::out);
+	if(todo_txt == NULL) {
+		cout << "Error opening the file" << "\n";
 		exit(1);
 	}
-	//For "ls" command.
+	if(!strcmp(argv[1], "add")) {
+		string event;
+		strcpy(event, argv[2]);
+		add(todo_txt, event);
+		return 0;
+	}
 	if(!strcmp(argv[1], "ls")) {
 		display(todo_txt);
 		return 0;
 	}
-	//For "add" command.
-	// if (!strcmp(argv[1], "add")) {
-	// 	string event;
-	// 	strcpy(event, argv[2]);
-	// 	add(todo_txt_write, event);
-	// 	return 0;
-	// }
-	return 0;
+	if(!strcmp(argv[1], "del")) {
+		string event;
+		strcpy(event, argv[2]);
+		del(todo_txt, event);
+		return 0;
+	}
+	if(!strcmp(argv[1], ))
 }
