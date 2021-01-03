@@ -47,7 +47,8 @@ void add(FILE* fptr, char *event) {
   //   printf("Event already exists..\n");
   //   return ;
   // }
-  fprintf(fptr, "%d %s\n", countTodo(fptr), event);
+  // fprintf(fptr, "%d %s\n", countTodo(fptr), event);
+	fprintf(fptr, " %s\n", event);
   printf("Added todo: \"%s\"\n", event);
 }
 
@@ -57,14 +58,14 @@ void display(FILE* fptr) {
   // debug("Checking c", 1);
   // strcpy(c[count], "\0");
   while(fgets(c[count], 128, fptr) != NULL) {
-    // printf("%s\n", c[count]);
-    count++;
-    // strcpy(c[count], "\0");
+	// printf("%s\n", c[count]);
+	count++;
+	// strcpy(c[count], "\0");
   }
   // debug("After checking c", 1);
   // debug("Count =", count);
   for (int i = 0; i < count; i++) {
-    printf("[%d] %s", count - i, c[count - i - 1] /**(*(c + count - i - 1) + 1)*/);
+	printf("[%d] %s", count - i, c[count - i - 1] /*,*(*(c + count - i - 1) + 1)*/);
   }
   printf("\n");
 }
@@ -73,34 +74,34 @@ int countTodo(FILE* fptr) {
   char c[128];
   int count = 0;
   while(fgets(c, 128, fptr) != NULL) {
-    count++;
+	count++;
   }
   return count + 1;
 }
 
 void delete(FILE* fptr_original, int event_number) {
   if(event_number > countTodo(fptr_original)) {
-    printf("Error: todo #%d does nor exit. Nothing deleted\n", event_number);
+	printf("Error: todo #%d does nor exit. Nothing deleted\n", event_number);
   }
   char temp[] = "temp.txt";
   char c[128];
   int curr_line = 0;
   FILE* fptr_temp = fopen(temp, "w");
   if(fptr_temp == NULL) {
-    printf("Error!\n");
-    exit(1);
+	printf("Error!\n");
+	exit(1);
   }
   while(fgets(c, 128, fptr_original) != NULL) {
-    fprintf(fptr_temp, "%s", c);
+	fprintf(fptr_temp, "%s", c);
   }
   fclose(fptr_original);
   remove("todo.txt");
   fptr_original = fopen("todo.txt", "r+");
   while (fgets(c, 128, fptr_temp) != NULL) {
-    curr_line++;
-    if(curr_line != event_number) {
-      fprintf(fptr_original, "%s", c);
-    }
+	curr_line++;
+	if(curr_line != event_number) {
+	  fprintf(fptr_original, "%s", c);
+	}
   }
   fclose(fptr_temp);
   remove("temp.txt");
